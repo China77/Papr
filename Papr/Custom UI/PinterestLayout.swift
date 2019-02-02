@@ -17,21 +17,30 @@ import RxCocoa
 class PinterestLayout: UICollectionViewLayout {
 
     // MARK: Public
-    var numberOfColumns: Int = 1
     var minimumLineSpacing: CGFloat = 1 / UIScreen.main.scale
     var minimumInteritemSpacing: CGFloat = 1 / UIScreen.main.scale
 
     // MARK: Delegate
     weak var delegate: PinterestLayoutDelegate?
 
-    // MARK: Fileprivates
-    fileprivate var contentHeight: CGFloat = 0
-    fileprivate var contentWidth: CGFloat {
+    // MARK: Private
+    private var numberOfColumns: Int
+    private var contentHeight: CGFloat = 0
+    private var contentWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         let insets = collectionView.contentInset
         return collectionView.bounds.width - (insets.left + insets.right)
     }
-    fileprivate var cache = [UICollectionViewLayoutAttributes]()
+    private var cache = [UICollectionViewLayoutAttributes]()
+
+    init(numberOfColumns: Int = 1) {
+        self.numberOfColumns = numberOfColumns
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: Overrides
     override var collectionViewContentSize: CGSize {
